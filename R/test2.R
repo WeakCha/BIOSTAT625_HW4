@@ -118,6 +118,11 @@ if(flag == FALSE){
   install.packages("gmp")
 }
 
+flag = require(usethis)
+if(flag == FALSE){
+  install.packages("usethis")
+}
+
 library(bench)
 library(gmp)
 LinearRegression(data, features = c("sex", "cp"), target = "target", 0.8, seed = 300)
