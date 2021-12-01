@@ -43,7 +43,7 @@ library(survival)
 
 
 
-dataPreprocess = function(data, features, target, training_part = 0.8){
+dataPreprocess = function(data, features, target, training_part = 0.8, seed = 200){
   X = select(data, features)
   Y = select(data, target)
   X = as.matrix(X)
@@ -51,6 +51,8 @@ dataPreprocess = function(data, features, target, training_part = 0.8){
   X_row = nrow(X)
   seq_1 = rep(1, X_row)
   X = cbind(seq_1, X)
+
+  set.seed(seed)
 
   index = sample(1:nrow(data), training_part*nrow(data))
 
