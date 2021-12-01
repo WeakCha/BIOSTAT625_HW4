@@ -93,7 +93,7 @@ eval_metrics = function(true, predictions){
 LinearRegression = function(data, training_part = 0.8, features = NULL, target, seed = 200){
   flag = require(dplyr)
   if(flag == FALSE){
-    install.packages(dplyr)
+    install.packages("dplyr")
   }
   library(dplyr)
   set.seed(seed)
