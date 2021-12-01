@@ -1,5 +1,5 @@
-\name{LinearRegression}
-\alias{LinearRegression}
+\name{fastRidgeRegression}
+\alias{fastRidgeRegression}
 %- Also NEED an '\alias' for EACH other topic documented here.
 \title{
 %%  ~~function to do ... ~~
@@ -7,27 +7,27 @@ a
 }
 \description{
 %%  ~~ A concise (1-5 lines) description of what the function does. ~~
-f
+d
 }
 \usage{
-LinearRegression(data, training_part = 0.8, features = NULL, target, seed = 200)
+fastRidgeRegression(X_train, Y_train, X_test, Y_test, training_part = 0.8)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
-  \item{data}{
-%%     ~~Describe \code{data} here~~
+  \item{X_train}{
+%%     ~~Describe \code{X_train} here~~
+}
+  \item{Y_train}{
+%%     ~~Describe \code{Y_train} here~~
+}
+  \item{X_test}{
+%%     ~~Describe \code{X_test} here~~
+}
+  \item{Y_test}{
+%%     ~~Describe \code{Y_test} here~~
 }
   \item{training_part}{
 %%     ~~Describe \code{training_part} here~~
-}
-  \item{features}{
-%%     ~~Describe \code{features} here~~
-}
-  \item{target}{
-%%     ~~Describe \code{target} here~~
-}
-  \item{seed}{
-%%     ~~Describe \code{seed} here~~
 }
 }
 \details{
@@ -61,22 +61,13 @@ LinearRegression(data, training_part = 0.8, features = NULL, target, seed = 200)
 ##--	or do  help(data=index)  for the standard data sets.
 
 ## The function is currently defined as
-function (data, training_part = 0.8, features = NULL, target,
-    seed = 200)
+function (X_train, Y_train, X_test, Y_test, training_part = 0.8)
 {
-    set.seed(seed)
-    res = dataPreprocess(data, features, target, training_part)
-    X_train = res$X_train
-    X_test = res$X_test
-    Y_train = res$Y_train
-    Y_test = res$Y_test
-    Y_train = as.matrix(Y_train)
-    Y_test = as.matrix(Y_test)
-    res = fastRidgeRegression(X_train, Y_train, X_test, Y_test,
-        training_part)
-    beta = res$beta
-    pred = res$pred
-    RMSE = res$RMSE
+    res_svd = svd(X_train)
+    tuy = crossprod(res_svd$u, Y_train)
+    beta = res_svd$v \%*\% (tuy * res_svd$d/(res_svd$d^2))
+    pred = crossprod(t(X_test), beta)
+    RMSE = eval_metrics(Y_test, pred)
     return(list(pred = pred, RMSE = RMSE))
   }
 }

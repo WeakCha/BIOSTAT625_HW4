@@ -1,5 +1,5 @@
-\name{LinearRegression}
-\alias{LinearRegression}
+\name{eval_metrics}
+\alias{eval_metrics}
 %- Also NEED an '\alias' for EACH other topic documented here.
 \title{
 %%  ~~function to do ... ~~
@@ -10,24 +10,15 @@ a
 f
 }
 \usage{
-LinearRegression(data, training_part = 0.8, features = NULL, target, seed = 200)
+eval_metrics(true, predictions)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
-  \item{data}{
-%%     ~~Describe \code{data} here~~
+  \item{true}{
+%%     ~~Describe \code{true} here~~
 }
-  \item{training_part}{
-%%     ~~Describe \code{training_part} here~~
-}
-  \item{features}{
-%%     ~~Describe \code{features} here~~
-}
-  \item{target}{
-%%     ~~Describe \code{target} here~~
-}
-  \item{seed}{
-%%     ~~Describe \code{seed} here~~
+  \item{predictions}{
+%%     ~~Describe \code{predictions} here~~
 }
 }
 \details{
@@ -61,23 +52,13 @@ LinearRegression(data, training_part = 0.8, features = NULL, target, seed = 200)
 ##--	or do  help(data=index)  for the standard data sets.
 
 ## The function is currently defined as
-function (data, training_part = 0.8, features = NULL, target,
-    seed = 200)
+function (true, predictions)
 {
-    set.seed(seed)
-    res = dataPreprocess(data, features, target, training_part)
-    X_train = res$X_train
-    X_test = res$X_test
-    Y_train = res$Y_train
-    Y_test = res$Y_test
-    Y_train = as.matrix(Y_train)
-    Y_test = as.matrix(Y_test)
-    res = fastRidgeRegression(X_train, Y_train, X_test, Y_test,
-        training_part)
-    beta = res$beta
-    pred = res$pred
-    RMSE = res$RMSE
-    return(list(pred = pred, RMSE = RMSE))
+    resids = true - predictions
+    resids2 = resids^2
+    N = length(predictions)
+    RMSE = round(sqrt(sum(resids2)/N), 2)
+    return(RMSE)
   }
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the

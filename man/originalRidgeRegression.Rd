@@ -1,5 +1,5 @@
-\name{LinearRegression}
-\alias{LinearRegression}
+\name{originalRidgeRegression}
+\alias{originalRidgeRegression}
 %- Also NEED an '\alias' for EACH other topic documented here.
 \title{
 %%  ~~function to do ... ~~
@@ -10,21 +10,21 @@ a
 f
 }
 \usage{
-LinearRegression(data, training_part = 0.8, features = NULL, target, seed = 200)
+originalRidgeRegression(data, features = NULL, target, training_part = 0.8, seed = 200)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
   \item{data}{
 %%     ~~Describe \code{data} here~~
 }
-  \item{training_part}{
-%%     ~~Describe \code{training_part} here~~
-}
   \item{features}{
 %%     ~~Describe \code{features} here~~
 }
   \item{target}{
 %%     ~~Describe \code{target} here~~
+}
+  \item{training_part}{
+%%     ~~Describe \code{training_part} here~~
 }
   \item{seed}{
 %%     ~~Describe \code{seed} here~~
@@ -61,22 +61,27 @@ LinearRegression(data, training_part = 0.8, features = NULL, target, seed = 200)
 ##--	or do  help(data=index)  for the standard data sets.
 
 ## The function is currently defined as
-function (data, training_part = 0.8, features = NULL, target,
+function (data, features = NULL, target, training_part = 0.8,
     seed = 200)
 {
+    flag = require("glmnet")
+    if (flag == FALSE) {
+        install.packages("glmnet")
+        library(glmnet)
+    }
     set.seed(seed)
-    res = dataPreprocess(data, features, target, training_part)
-    X_train = res$X_train
-    X_test = res$X_test
-    Y_train = res$Y_train
-    Y_test = res$Y_test
-    Y_train = as.matrix(Y_train)
-    Y_test = as.matrix(Y_test)
-    res = fastRidgeRegression(X_train, Y_train, X_test, Y_test,
-        training_part)
-    beta = res$beta
-    pred = res$pred
-    RMSE = res$RMSE
+    index = sample(1:nrow(data), training_part * nrow(data))
+    data_train = data[index, ]
+    data_test = data[-index, ]
+    X_train = data.matrix(data_train[, features])
+    Y_train = data_train[, target]
+    X_test = data.matrix(data_test[, features])
+    Y_test = data_test[, target]
+    model = glmnet(X_train, Y_train, alpha = 0, lambda = 0, family = "gaussian")
+    pred = predict(model, X_test)
+    pred = as.vector(pred)
+    RMSE = eval_metrics(Y_test, as.vector(pred))
+    pred = as.matrix(pred)
     return(list(pred = pred, RMSE = RMSE))
   }
 }

@@ -1,9 +1,47 @@
-data <- read.csv("heart.csv")
+#data <- read.csv("data/heart.csv")
 
-flag = require("dplyr")
-if(flag == FALSE){
-  install.packages("dplyr")
-}
+install.packages("dplyr", repos = "http://cran.us.r-project.org")
+install.packages("lattice", repos = "http://cran.us.r-project.org")
+install.packages("Matrix", repos = "http://cran.us.r-project.org")
+install.packages("glmnet", repos = "http://cran.us.r-project.org")
+install.packages("survival", repos = "http://cran.us.r-project.org")
+
+library(dplyr)
+library(lattice)
+library(Matrix)
+library(glmnet)
+library(survival)
+#flag = require("dplyr")
+#if(flag == FALSE){
+#  install.packages("dplyr")
+#  library(dplyr)
+#}
+
+#flag = require("survival")
+#if(flag == FALSE){
+#  install.packages("survival", repos = "http://cran.us.r-project.org")
+#  library(survival)
+#}
+
+#flag = require("lattice")
+#if(flag == FALSE){
+#  install.packages("lattice", repos = "http://cran.us.r-project.org")
+#  library(lattice)
+#}
+
+#flag = require("Matrix")
+#if(flag == FALSE){
+#  install.packages("Matrix", repos = "http://cran.us.r-project.org")
+#  library(Matrix)
+#}
+
+#flag = require("glmnet")
+#if(flag == FALSE){
+#  install.packages("glmnet", repos = "http://cran.us.r-project.org")
+#  library(glmnet)
+#}
+
+
 
 dataPreprocess = function(data, features, target, training_part = 0.8){
   X = select(data, features)
@@ -26,11 +64,11 @@ dataPreprocess = function(data, features, target, training_part = 0.8){
 
 originalRidgeRegression = function(data, features = NULL, target, training_part = 0.8, seed = 200){
   # Model requiring glmnet
-  flag = require("glmnet")
-  if(flag == FALSE){
-    install.packages("glmnet")
-    library(glmnet)
-  }
+  #flag = require("glmnet")
+  #if(flag == FALSE){
+  #  install.packages("glmnet")
+  #  library(glmnet)
+  #}
 
   set.seed(seed)
   # res = dataPreprocess(data, features, target, training_part)
@@ -91,11 +129,11 @@ eval_metrics = function(true, predictions){
 }
 
 LinearRegression = function(data, training_part = 0.8, features = NULL, target, seed = 200){
-  flag = require("dplyr")
-  if(flag == FALSE){
-    install.packages("dplyr")
-  }
-  library("dplyr")
+  #flag = require("dplyr")
+  #if(flag == FALSE){
+  #  install.packages("dplyr")
+  #}
+  #library("dplyr")
   set.seed(seed)
   res = dataPreprocess(data, features, target, training_part)
   X_train = res$X_train
@@ -113,22 +151,22 @@ LinearRegression = function(data, training_part = 0.8, features = NULL, target, 
   return (list(pred = pred, RMSE = RMSE))
 }
 
-flag = require(bench)
-if(flag == FALSE){
-  install.packages("bench")
-}
+#flag = require(bench)
+#if(flag == FALSE){
+#  install.packages("bench")
+#}
 
-flag = require(gmp)
-if(flag == FALSE){
-  install.packages("gmp")
-}
+#flag = require(gmp)
+#if(flag == FALSE){
+#  install.packages("gmp")
+#}
 
-flag = require(usethis)
-if(flag == FALSE){
-  install.packages("usethis")
-}
+#flag = require(usethis)
+#if(flag == FALSE){
+#  install.packages("usethis")
+#}
 
-library(bench)
-library(gmp)
-LinearRegression(data, features = c("sex", "cp"), target = "target", 0.8, seed = 300)
-bench::mark(originalRidgeRegression(data, features = c("sex", "cp"), target = "target", 0.8), LinearRegression(data, features = c("sex", "cp"), target = "target", 0.8))
+#library(bench)
+#library(gmp)
+#LinearRegression(data, features = c("sex", "cp"), target = "target", 0.8, seed = 300)
+#bench::mark(originalRidgeRegression(data, features = c("sex", "cp"), target = "target", 0.8), LinearRegression(data, features = c("sex", "cp"), target = "target", 0.8))

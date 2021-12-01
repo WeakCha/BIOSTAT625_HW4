@@ -1,5 +1,5 @@
-\name{LinearRegression}
-\alias{LinearRegression}
+\name{dataPreprocess}
+\alias{dataPreprocess}
 %- Also NEED an '\alias' for EACH other topic documented here.
 \title{
 %%  ~~function to do ... ~~
@@ -10,15 +10,12 @@ a
 f
 }
 \usage{
-LinearRegression(data, training_part = 0.8, features = NULL, target, seed = 200)
+dataPreprocess(data, features, target, training_part = 0.8)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
   \item{data}{
 %%     ~~Describe \code{data} here~~
-}
-  \item{training_part}{
-%%     ~~Describe \code{training_part} here~~
 }
   \item{features}{
 %%     ~~Describe \code{features} here~~
@@ -26,8 +23,8 @@ LinearRegression(data, training_part = 0.8, features = NULL, target, seed = 200)
   \item{target}{
 %%     ~~Describe \code{target} here~~
 }
-  \item{seed}{
-%%     ~~Describe \code{seed} here~~
+  \item{training_part}{
+%%     ~~Describe \code{training_part} here~~
 }
 }
 \details{
@@ -61,23 +58,22 @@ LinearRegression(data, training_part = 0.8, features = NULL, target, seed = 200)
 ##--	or do  help(data=index)  for the standard data sets.
 
 ## The function is currently defined as
-function (data, training_part = 0.8, features = NULL, target,
-    seed = 200)
+function (data, features, target, training_part = 0.8)
 {
-    set.seed(seed)
-    res = dataPreprocess(data, features, target, training_part)
-    X_train = res$X_train
-    X_test = res$X_test
-    Y_train = res$Y_train
-    Y_test = res$Y_test
-    Y_train = as.matrix(Y_train)
-    Y_test = as.matrix(Y_test)
-    res = fastRidgeRegression(X_train, Y_train, X_test, Y_test,
-        training_part)
-    beta = res$beta
-    pred = res$pred
-    RMSE = res$RMSE
-    return(list(pred = pred, RMSE = RMSE))
+    X = select(data, features)
+    Y = select(data, target)
+    X = as.matrix(X)
+    Y = as.matrix(Y)
+    X_row = nrow(X)
+    seq_1 = rep(1, X_row)
+    X = cbind(seq_1, X)
+    index = sample(1:nrow(data), training_part * nrow(data))
+    X_train = X[index, ]
+    X_test = X[-index, ]
+    Y_train = Y[index, ]
+    Y_test = Y[-index, ]
+    return(list(X_train = X_train, X_test = X_test, Y_train = Y_train,
+        Y_test = Y_test))
   }
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the
