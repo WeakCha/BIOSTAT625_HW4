@@ -3,11 +3,11 @@
 %- Also NEED an '\alias' for EACH other topic documented here.
 \title{
 %%  ~~function to do ... ~~
-a
+Evaluation RMSE for True and Prediction Data
 }
 \description{
 %%  ~~ A concise (1-5 lines) description of what the function does. ~~
-f
+Compute the RMSE for a given true and prediction data.
 }
 \usage{
 eval_metrics(true, predictions)
@@ -16,13 +16,12 @@ eval_metrics(true, predictions)
 \arguments{
   \item{true}{
 %%     ~~Describe \code{true} here~~
+\code{true} is the vector of true values.
 }
   \item{predictions}{
 %%     ~~Describe \code{predictions} here~~
+\code{predictions} is the vector of prediction values.
 }
-}
-\details{
-%%  ~~ If necessary, more details than the description above ~~
 }
 \value{
 %%  ~Describe the value returned
@@ -30,22 +29,18 @@ eval_metrics(true, predictions)
 %%  \item{comp1 }{Description of 'comp1'}
 %%  \item{comp2 }{Description of 'comp2'}
 %% ...
+A scalar RMSE
 }
-\references{
-%% ~put references to the literature/web site here ~
-}
+
 \author{
 %%  ~~who you are~~
+Li (Richard) Liu
 }
-\note{
-%%  ~~further notes~~
-}
+
 
 %% ~Make other sections like Warning with \section{Warning }{....} ~
 
-\seealso{
-%% ~~objects to See Also as \code{\link{help}}, ~~~
-}
+
 \examples{
 ##---- Should be DIRECTLY executable !! ----
 ##-- ==>  Define data, use random,

@@ -3,11 +3,11 @@
 %- Also NEED an '\alias' for EACH other topic documented here.
 \title{
 %%  ~~function to do ... ~~
-a
+Data Preprocess for Fast Linear Regression
 }
 \description{
 %%  ~~ A concise (1-5 lines) description of what the function does. ~~
-f
+Data Preprocess for Fast Linear Regression
 }
 \usage{
 dataPreprocess(data, features, target, training_part = 0.8)
@@ -16,42 +16,53 @@ dataPreprocess(data, features, target, training_part = 0.8)
 \arguments{
   \item{data}{
 %%     ~~Describe \code{data} here~~
-}
-  \item{features}{
-%%     ~~Describe \code{features} here~~
-}
-  \item{target}{
-%%     ~~Describe \code{target} here~~
+\code{data} is a \code{data.frame}.
 }
   \item{training_part}{
 %%     ~~Describe \code{training_part} here~~
+\code{training_part} is the ratio for training data.
+}
+  \item{features}{
+%%     ~~Describe \code{features} here~~
+\code{features} is a vector with the names of the features you want to use as predictors.
+}
+  \item{target}{
+\code{target} is a string with the name of the target. We only allow uni-label predicting in this package.
+%%     ~~Describe \code{target} here~~
 }
 }
-\details{
-%%  ~~ If necessary, more details than the description above ~~
-}
+
 \value{
 %%  ~Describe the value returned
 %%  If it is a LIST, use
 %%  \item{comp1 }{Description of 'comp1'}
 %%  \item{comp2 }{Description of 'comp2'}
 %% ...
+  \item{X_train}{
+%%     ~~Describe \code{X_train} here~~
+The data used for training the linear regression model, with only features.
 }
-\references{
-%% ~put references to the literature/web site here ~
+  \item{Y_train}{
+%%     ~~Describe \code{Y_train} here~~
+The data used for training the linear regression model, with only target.
+}
+  \item{X_test}{
+%%     ~~Describe \code{X_test} here~~
+The data used for prediction and computing RMSE, with only features.
+}
+  \item{Y_test}{
+%%     ~~Describe \code{Y_test} here~~
+The data used for prediction and computing RMSE, with only target.
+}
 }
 \author{
 %%  ~~who you are~~
+Li (Richard) Liu
 }
-\note{
-%%  ~~further notes~~
-}
+
 
 %% ~Make other sections like Warning with \section{Warning }{....} ~
 
-\seealso{
-%% ~~objects to See Also as \code{\link{help}}, ~~~
-}
 \examples{
 ##---- Should be DIRECTLY executable !! ----
 ##-- ==>  Define data, use random,

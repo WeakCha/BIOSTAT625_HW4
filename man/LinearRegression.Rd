@@ -3,11 +3,11 @@
 %- Also NEED an '\alias' for EACH other topic documented here.
 \title{
 %%  ~~function to do ... ~~
-a
+Fast Linear Regression
 }
 \description{
 %%  ~~ A concise (1-5 lines) description of what the function does. ~~
-f
+This function will do a linear regression like a machine learning taste, which means it will split the dataset into training set (with the ratio \code{training_part}) and test set and return the predicted result and the RMSE of the test set.
 }
 \usage{
 LinearRegression(data, training_part = 0.8, features = NULL, target, seed = 200)
@@ -16,22 +16,24 @@ LinearRegression(data, training_part = 0.8, features = NULL, target, seed = 200)
 \arguments{
   \item{data}{
 %%     ~~Describe \code{data} here~~
+\code{data} is a \code{data.frame}.
 }
   \item{training_part}{
 %%     ~~Describe \code{training_part} here~~
+\code{training_part} is the ratio for training data.
 }
   \item{features}{
 %%     ~~Describe \code{features} here~~
+\code{features} is a vector with the names of the features you want to use as predictors.
 }
   \item{target}{
+\code{target} is a string with the name of the target. We only allow uni-label predicting in this package.
 %%     ~~Describe \code{target} here~~
 }
   \item{seed}{
+  \code{seed} is the seed you want to specify, this ensures the reproducibility of the data.
 %%     ~~Describe \code{seed} here~~
 }
-}
-\details{
-%%  ~~ If necessary, more details than the description above ~~
 }
 \value{
 %%  ~Describe the value returned
@@ -39,22 +41,18 @@ LinearRegression(data, training_part = 0.8, features = NULL, target, seed = 200)
 %%  \item{comp1 }{Description of 'comp1'}
 %%  \item{comp2 }{Description of 'comp2'}
 %% ...
+\item{pred}{The prediction for the test set the algorithm automatically splitted}
+\item{RMSE}{The RMSE between the prediction and true target result for the test set}
 }
-\references{
-%% ~put references to the literature/web site here ~
-}
+
 \author{
-%%  ~~who you are~~
+Li (Richard) Liu
 }
-\note{
-%%  ~~further notes~~
-}
+
 
 %% ~Make other sections like Warning with \section{Warning }{....} ~
 
-\seealso{
-%% ~~objects to See Also as \code{\link{help}}, ~~~
-}
+
 \examples{
 ##---- Should be DIRECTLY executable !! ----
 ##-- ==>  Define data, use random,

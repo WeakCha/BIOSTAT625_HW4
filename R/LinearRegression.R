@@ -100,7 +100,7 @@ originalRidgeRegression = function(data, features = NULL, target, training_part 
   # print(X_train)
 
   model = glmnet(X_train, Y_train, alpha = 0, lambda = 0, family = "gaussian")
-  # print(model$beta)
+  print(as.matrix(model$beta))
   pred = predict(model, X_test)
   pred = as.vector(pred)
   RMSE = eval_metrics(Y_test, as.vector(pred))
@@ -112,7 +112,7 @@ fastRidgeRegression = function(X_train, Y_train, X_test, Y_test, training_part =
   res_svd = svd(X_train)
   tuy = crossprod(res_svd$u, Y_train)
   beta = res_svd$v %*% (tuy * res_svd$d / (res_svd$d^2 ))
-  # print(beta)
+  print(beta)
 
   pred = crossprod(t(X_test), beta)
 
