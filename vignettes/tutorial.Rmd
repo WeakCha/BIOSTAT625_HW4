@@ -6,6 +6,19 @@ vignette: >
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
+```{r}
+install.packages("dplyr", repos = "http://cran.us.r-project.org")
+install.packages("lattice", repos = "http://cran.us.r-project.org")
+install.packages("Matrix", repos = "http://cran.us.r-project.org")
+install.packages("survival", repos = "http://cran.us.r-project.org")
+install.packages("glmnet", repos = "http://cran.us.r-project.org")
+
+library(dplyr)
+library(lattice)
+library(Matrix)
+library(glmnet)
+library(survival)
+```
 
 ```{r, include = FALSE}
 knitr::opts_chunk$set(
@@ -16,4 +29,17 @@ knitr::opts_chunk$set(
 
 ```{r setup}
 library(BIOSTAT625)
+```
+The main part of the function is to train a linear model and use it for prediction and computing Statistics. The main function is `LinearRegression`, it can split the data into training data and test data with respect to the ratio `training_part`. The return value is a list with `pred` and `RMSE`, `pred` is the predicted result for the test data and `RMSE` is the RMSE for the test data. 
+```{r}
+data(mtcars)
+LinearRegression(mtcars, features = c("mpg", "cyl"), target = "qsec", 0.8, seed = 200)
+originalRidgeRegression(mtcars, features = c("mpg", "cyl"), target = "qsec", 0.8) # The original function packaging used for comparison.
+```
+As you can see, the first parameter is the data you used for training and test, is must be a `data.frame` or the function will return error. The second one is `features` which are the features you want to use for training linear regression. Please note that we DO NOT support categorical features, all numbers will be regarded as continuous. The third one is `target` which is the target column you want to use, we DO NOT support multi-label case. The last element is `trainging_part` which is the training data ratio you want to use to split the training and test data. 
+
+Here is a benchmark of our result and the original one.
+```{r}
+library(bench)
+bench::mark(originalRidgeRegression(mtcars, features = c("mpg", "disp"), target = "qsec", 0.8), LinearRegression(mtcars, features = c("mpg", "disp"), target = "qsec", 0.8))
 ```

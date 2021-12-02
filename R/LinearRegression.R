@@ -108,6 +108,7 @@ originalRidgeRegression = function(data, features = NULL, target, training_part 
   pred = as.matrix(pred)
   pred = round(pred, 1)
   rownames(pred) = NULL
+  colnames(pred) = NULL
   return (list(pred = pred, RMSE = RMSE))
 }
 
@@ -118,7 +119,7 @@ fastRidgeRegression = function(X_train, Y_train, X_test, Y_test, training_part =
   # print(beta)
 
   pred = crossprod(t(X_test), beta)
-
+  attributes(pred)$dimnames = NULL
   RMSE = eval_metrics(Y_test, pred)
   return (list(pred = pred, RMSE = RMSE))
 }
@@ -132,11 +133,10 @@ eval_metrics = function(true, predictions){
 }
 
 LinearRegression = function(data, training_part = 0.8, features = NULL, target, seed = 200){
-  #flag = require("dplyr")
-  #if(flag == FALSE){
-  #  install.packages("dplyr")
-  #}
-  #library("dplyr")
+  #Sanity Check
+  stopifnot(is.data.frame(data))
+  stopifnot(length(target) == 1)
+
   set.seed(seed)
   res = dataPreprocess(data, features, target, training_part)
   X_train = res$X_train
@@ -152,6 +152,7 @@ LinearRegression = function(data, training_part = 0.8, features = NULL, target, 
   pred = res$pred
   pred = round(pred, 1)
   rownames(pred) = NULL
+  colnames(pred) = NULL
   RMSE = res$RMSE
   return (list(pred = pred, RMSE = RMSE))
 }
