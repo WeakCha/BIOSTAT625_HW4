@@ -42,7 +42,6 @@ library(survival)
 #}
 
 
-
 dataPreprocess = function(data, features, target, training_part = 0.8, seed = 200){
   X = select(data, features)
   Y = select(data, target)
@@ -102,11 +101,13 @@ originalRidgeRegression = function(data, features = NULL, target, training_part 
   # print(X_train)
 
   model = glmnet(X_train, Y_train, alpha = 0, lambda = 0, family = "gaussian")
-  print(as.matrix(model$beta))
+  # print(as.matrix(model$beta))
   pred = predict(model, X_test)
   pred = as.vector(pred)
   RMSE = eval_metrics(Y_test, as.vector(pred))
   pred = as.matrix(pred)
+  pred = round(pred, 1)
+  rownames(pred) = NULL
   return (list(pred = pred, RMSE = RMSE))
 }
 
@@ -114,7 +115,7 @@ fastRidgeRegression = function(X_train, Y_train, X_test, Y_test, training_part =
   res_svd = svd(X_train)
   tuy = crossprod(res_svd$u, Y_train)
   beta = res_svd$v %*% (tuy * res_svd$d / (res_svd$d^2 ))
-  print(beta)
+  # print(beta)
 
   pred = crossprod(t(X_test), beta)
 
@@ -126,7 +127,7 @@ eval_metrics = function(true, predictions){
   resids = true - predictions
   resids2 = resids**2
   N = length(predictions)
-  RMSE = round(sqrt(sum(resids2)/N), 2)
+  RMSE = round(sqrt(sum(resids2)/N), 1)
   return(RMSE)
 }
 
@@ -149,6 +150,8 @@ LinearRegression = function(data, training_part = 0.8, features = NULL, target, 
   res = fastRidgeRegression(X_train, Y_train, X_test, Y_test, training_part)
   beta = res$beta
   pred = res$pred
+  pred = round(pred, 1)
+  rownames(pred) = NULL
   RMSE = res$RMSE
   return (list(pred = pred, RMSE = RMSE))
 }
