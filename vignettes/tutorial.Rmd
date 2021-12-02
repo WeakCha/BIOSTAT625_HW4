@@ -12,7 +12,7 @@ install.packages("lattice", repos = "http://cran.us.r-project.org")
 install.packages("Matrix", repos = "http://cran.us.r-project.org")
 install.packages("survival", repos = "http://cran.us.r-project.org")
 install.packages("glmnet", repos = "http://cran.us.r-project.org")
-install.packages("bench")
+install.packages("bench", repos = "http://cran.us.r-project.org")
 
 library(dplyr)
 library(lattice)
