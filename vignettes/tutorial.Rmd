@@ -12,12 +12,17 @@ install.packages("lattice", repos = "http://cran.us.r-project.org")
 install.packages("Matrix", repos = "http://cran.us.r-project.org")
 install.packages("survival", repos = "http://cran.us.r-project.org")
 install.packages("glmnet", repos = "http://cran.us.r-project.org")
+install.packages("bench", repos = "http://cran.us.r-project.org")
+install.packages("gmp", repos = "http://cran.us.r-project.org")
+
 
 library(dplyr)
 library(lattice)
 library(Matrix)
 library(glmnet)
 library(survival)
+library(bench)
+library(gmp)
 ```
 
 ```{r, include = FALSE}
