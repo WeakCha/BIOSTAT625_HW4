@@ -10,7 +10,7 @@ Data Preprocess for Fast Linear Regression
 Data Preprocess for Fast Linear Regression
 }
 \usage{
-dataPreprocess(data, features, target, training_part = 0.8)
+dataPreprocess(data, features, target, training_part = 0.8, seed = 200)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
@@ -21,6 +21,9 @@ dataPreprocess(data, features, target, training_part = 0.8)
   \item{training_part}{
 %%     ~~Describe \code{training_part} here~~
 \code{training_part} is the ratio for training data.
+}
+\item{seed}{
+\code{seed} is the random seed, it is used for result reproducibility.
 }
   \item{features}{
 %%     ~~Describe \code{features} here~~
